@@ -16,25 +16,90 @@ using System.Text.RegularExpressions;
 
 public class Merger
 {
-  string _installRoot;
+  string _installRoot;  // application root folder
   string _downloadRoot;
-
-  public Merger( string installRoot, string downloadRoot )
-  {
-    _installRoot  = installRoot;   // use appRoot ?? 
-    _downloadRoot = downloadRoot;
-  }
+  string _atticRoot;
   
+  string _packName;  // e.g  meta or pkg or package or paket etc. - where zips and manifest gets stored
+
   public Merger( string installRoot )
   {
     // todo: can we call main constructor? - use super() or similar?? possible
     
     _installRoot  = installRoot;   // use appRoot ?? 
     _downloadRoot = _installRoot + @"\downloads";   // default to <installDir>/downloads
+    _atticRoot    = _downloadRoot +@"\attic";       // default to <downloadDir>/attic
+
+    _packName  = "paket";
   }
 
-  
-  public string FindLatestPaketDir( string manifestName )
+  public void MergeVersionPack( string manifestName )
+  {
+    string installedVersion = Utils.FindPackVersion( _installRoot+@"\"+_packName+@"\"+ manifestName + ".txt" );
+
+    string versionRoot  = FindVersionPackDir( manifestName );
+
+    if( versionRoot != null )
+    {
+       Console.WriteLine( "try merge from w/ versionRoot: " + versionRoot ); 
+
+       string dl_updates = versionRoot+@"\updates";
+       string dl_patches = versionRoot+@"\patches";
+
+       // make sure dirs exists
+       Directory.CreateDirectory( dl_updates ); 
+       Directory.CreateDirectory( dl_patches );
+
+       string attic_updates = _atticRoot+@"\"+installedVersion+@"\updates";
+       string attic_patches = _atticRoot+@"\"+installedVersion+@"\patches";
+
+       Directory.CreateDirectory( attic_updates );
+       Directory.CreateDirectory( attic_patches ); 
+          
+       HandleUpdates( dl_updates, attic_updates );
+       HandlePatches( dl_patches, attic_patches );
+    }
+  }
+
+
+  public void MergeLatestPack( string manifestName )
+  {
+    // string installedVersion = Utils.FindPackVersion( _installRoot+@"\"+_packName+@"\"+ manifestName + ".txt" );
+
+    // todo/fix:
+    //  new method!!!!   use FindPackTimestamp()  - assumes no VERSION in manifest
+    
+    // note: latest assumes no version; will use timestamp of manifestFile for now
+    //   roughly equals the download date ??
+    string installedVersion = "add_timestamp_here";
+
+    string latestRoot = FindLatestPackDir( manifestName );
+
+    if( latestRoot != null )
+    {
+       Console.WriteLine( "try merge from w/ latestRoot: " + latestRoot ); 
+
+       string dl_updates = latestRoot+@"\updates";
+       string dl_patches = latestRoot+@"\patches";
+
+       // make sure dirs exists
+       Directory.CreateDirectory( dl_updates ); 
+       Directory.CreateDirectory( dl_patches );
+
+       // use manifestName instead of latest ?? e.g. kv or similar ?? or just merge everything together anyway!!
+       string attic_updates = _atticRoot+@"\latest\"+installedVersion+@"\updates";
+       string attic_patches = _atticRoot+@"\latest\"+installedVersion+@"\patches";
+
+       Directory.CreateDirectory( attic_updates );
+       Directory.CreateDirectory( attic_patches ); 
+          
+       HandleUpdates( dl_updates, attic_updates );
+       HandlePatches( dl_patches, attic_patches );
+    }
+  }
+
+
+  string FindLatestPackDir( string manifestName )
   {
     string latestDir = _downloadRoot + @"\latest";
        
@@ -43,7 +108,7 @@ public class Merger
     {
       Console.WriteLine( "  bingo! latest found; checking manifest" );
 
-      string manifestFile = latestDir + @"\paket\" + manifestName + ".txt";
+      string manifestFile = latestDir + @"\" + _packName+ @"\" + manifestName + ".txt";
       Console.WriteLine( "   check if manifest >"+ manifestFile +"< exists?" );
           
       // check if manifestFile exits ??
@@ -64,7 +129,7 @@ public class Merger
     }
   }
 
-  public string FindVersionPaketDir( string manifestName )
+  string FindVersionPackDir( string manifestName )
   {
     // walk folders and check
        
@@ -84,7 +149,7 @@ public class Merger
        {
           Console.WriteLine( "** bingo - versioned folder found; checking if manifest exists" );
 
-          string manifestFile = dir + @"\paket\" + manifestName + ".txt";
+          string manifestFile = dir + @"\" + _packName + @"\" + manifestName + ".txt";
           Console.WriteLine( "   check if manifest >"+ manifestFile +"< exists?" );
           
           // check if manifestFile exits ??
@@ -101,7 +166,7 @@ public class Merger
   }
 
 
-    public void HandlePatches( string patchesRoot, string atticRoot )
+    void HandlePatches( string patchesRoot, string atticRoot )
     {
         // note: in theory - patches should only be a handful of files (ideally)
         //   - do NOT abuse for switching complete webapps w/ hundreds of files and subfolders
@@ -128,7 +193,7 @@ public class Merger
 
 
 
-    public void HandleUpdates( string updatesRoot, string atticRoot )
+    void HandleUpdates( string updatesRoot, string atticRoot )
     {
        HandleUpdatesWorker( updatesRoot, updatesRoot, atticRoot, 1 );
     }

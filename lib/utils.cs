@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 
 public class Utils
 {
-  public static string FindPaketVersion( string path )
+  public static string FindPackVersion( string path )
   {
-       Console.WriteLine( "read meta file: " + path );
+       Console.WriteLine( "read manifest file: " + path );
 
        // todo: check if file exists? why? why not??
 
@@ -30,22 +30,22 @@ public class Utils
        return null;  // no version found in paket.txt
   }
     
-  public static bool IsDirFlat( string root )
+  public static bool IsDirFlat( string path )
   {
-     return root.Contains( "__I__" );
+     return path.Contains( "__I__" );
   }
 
-  public static bool IsDirFull( string root )
+  public static bool IsDirFull( string path )
   {
      // has some files (e.g. documents, that is, not just folders/directories)
-     string [] files = Directory.GetFiles( root );
+     string [] files = Directory.GetFiles( path );
      return files.Length > 0;
   }
 
-  public static bool IsDirJavaWebArchive( string root )
+  public static bool IsDirJavaWebArchive( string path )
   {
     // check for "root/top" folders WEB-INF & META-INF for now
-    string [] dirs = Directory.GetDirectories( root );
+    string [] dirs = Directory.GetDirectories( path );
        
     bool meta_inf_found = false;
     bool web_inf_found  = false;
