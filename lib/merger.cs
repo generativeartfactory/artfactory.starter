@@ -154,8 +154,8 @@ public class Merger
     {
        Console.WriteLine( "dir: " + dir );
 
-       // note: relativeFile will start with slash e.g. \weblibs\shared
-       string relativeDir = dir.Substring( _downloadRoot.Length, dir.Length-_downloadRoot.Length );   // cut off downloadRoot
+       // note: relativeFile will start with NOT start w/ slash e.g. weblibs\shared  NOT \weblibs\shared
+       string relativeDir = dir.Substring( _downloadRoot.Length+1, dir.Length-_downloadRoot.Length-1 );   // cut off downloadRoot
 
        Console.WriteLine( "  relativeDir: " + relativeDir );
 
@@ -236,15 +236,15 @@ public class Merger
     {
        Console.WriteLine( "process file: " + file );
 
-       // note: relativeFile will start with slash e.g. \weblibs\private
-       string relativeFile = file.Substring( patchesRoot.Length, file.Length-patchesRoot.Length );   // cut off patchesRoot
+       // note: relativeFile will NOT start with slash e.g. weblibs\private NOT \weblibs\private
+       string relativeFile = file.Substring( patchesRoot.Length+1, file.Length-patchesRoot.Length-1 );   // cut off patchesRoot
 
        Console.WriteLine( "  relative: " + relativeFile );
 
-       string installFile = _installRoot + relativeFile;
+       string installFile = _installRoot + @"\" + relativeFile;
        Console.WriteLine( "  installFile: " + installFile );
-      
-       string atticFile = atticRoot + relativeFile;
+
+       string atticFile = atticRoot + @"\" + relativeFile;
        Console.WriteLine( "  atticFile: " + atticFile );
 
        // if file exits already - move it to attic
@@ -256,7 +256,7 @@ public class Merger
            // use a flat folder structure in trash
            string ts = DateTime.Now.ToString( "yyyy-MM-dd_HH-mm-ss.fff" );
            string trashRelativeFlatFile = relativeFile.Replace( @"\", "__I__" );
-           string trashFile = _trashRoot + @"\__" + ts + "__" + trashRelativeFlatFile + ".tmp";
+           string trashFile = _trashRoot + @"\__" + ts + "__" + trashRelativeFlatFile + ".trash";
 
            // make sure dirs exists
            DirectoryInfo trashDirInfo = new FileInfo( trashFile ).Directory;
@@ -293,18 +293,18 @@ public class Merger
     {
           Console.WriteLine( "process dir: " + dir );
           
-          // note: relativeDir will start with slash e.g. \weblibs\private
-          string relativeFlatDir = dir.Substring( updatesRoot.Length, dir.Length-updatesRoot.Length );   // cut off updatesRoot
+          // note: relativeDir will NOT start with slash e.g. weblibs\private or \weblibs\private
+          string relativeFlatDir = dir.Substring( updatesRoot.Length+1, dir.Length-updatesRoot.Length-1 );   // cut off updatesRoot
           // todo: check if it works w/ multiple replaces (works like gsub not sub) ???
           string relativeDir =  relativeFlatDir.Replace( "__I__", @"\" );     // replace __I__ with proper folder separator, that is, => \
 
           Console.WriteLine( "  relativeFlat: " + relativeFlatDir );
           Console.WriteLine( "  relative: " + relativeDir );
 
-          string installDir = _installRoot + relativeDir;
+          string installDir = _installRoot + @"\"+ relativeDir;
           Console.WriteLine( "  installDir: " + installDir );
-          
-          string atticDir = atticRoot + relativeFlatDir;
+
+          string atticDir = atticRoot + @"\"+ relativeFlatDir;
           Console.WriteLine( "  atticDir: " + atticDir );
 
           // if folder exits already - move it to attic
@@ -317,7 +317,7 @@ public class Merger
 
                // use a flat folder structure in trash
                string trashRelativeFlatDir = relativeDir.Replace( @"\", "__I__" );
-               string trashDir = _trashRoot + @"\__" + ts + "__" + trashRelativeFlatDir + ".tmp";
+               string trashDir = _trashRoot + @"\__" + ts + "__" + trashRelativeFlatDir + ".trash";
 
                // make sure dirs exists
                DirectoryInfo trashDirInfo = Directory.GetParent( trashDir );
