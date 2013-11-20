@@ -18,19 +18,35 @@ public class Merger
 {
   string _installRoot;  // application root folder
   string _downloadRoot;
-  string _atticRoot;
-  
+  string _atticRoot;    // "old" updates n patches (might get restored)
+  string _trashRoot;    // trash - files and folders no longer used (mostly for used for duplicates that get moved from attic)
+
   string _packName;  // e.g  meta or pkg or package or paket etc. - where zips and manifest gets stored
 
-  public Merger( string installRoot )
+  public Merger( string installRoot, string downloadRoot, string atticRoot, string trashRoot )
   {
     // todo: can we call main constructor? - use super() or similar?? possible
     
-    _installRoot  = installRoot;   // use appRoot ?? 
-    _downloadRoot = _installRoot + @"\downloads";   // default to <installDir>/downloads
-    _atticRoot    = _downloadRoot +@"\attic";       // default to <downloadDir>/attic
+    _installRoot  = installRoot;   // use appRoot ??
+    _downloadRoot = downloadRoot;
+    _atticRoot    = atticRoot;
+    _trashRoot    = trashRoot;
 
     _packName  = "paket";
+
+    Console.WriteLine( "merger folders:" );
+    Console.WriteLine( "  installRoot:  >"+ _installRoot  + "<" );
+    Console.WriteLine( "  downloadRoot: >"+ _downloadRoot + "<" );
+    Console.WriteLine( "  atticRoot:    >"+ _atticRoot    + "<" );
+    Console.WriteLine( "  trashRoot:    >"+ _trashRoot    + "<" );    
+  }
+
+  public Merger( string installRoot )
+   : this( installRoot,
+           installRoot + @"\downloads",
+           installRoot + @"\downloads\attic",
+           installRoot + @"\downloads\trash" )
+  {
   }
 
   public void MergeVersionPack( string manifestName )
@@ -231,18 +247,26 @@ public class Merger
        string atticFile = atticRoot + relativeFile;
        Console.WriteLine( "  atticFile: " + atticFile );
 
+       // if file exits already - move it to attic
+       // -- if file also exits in attic; move it to trash
        if( File.Exists( installFile ) )
        {
          if( File.Exists( atticFile ))
          {
-           // check - is it a hack to allow files in attic!!!
-           //  for now rename w/ timestamp to make space
-           
-           // fix: move to trashDir!!!!!!!!!!!!!!!!!
-              
-           // if file exists in attic - rename with some classifier added
+           // use a flat folder structure in trash
            string ts = DateTime.Now.ToString( "yyyy-MM-dd_HH-mm-ss.fff" );
-           File.Move( atticFile, atticFile+"."+ts );
+           string trashRelativeFlatFile = relativeFile.Replace( @"\", "__I__" );
+           string trashFile = _trashRoot + @"\__" + ts + "__" + trashRelativeFlatFile + ".tmp";
+
+           // make sure dirs exists
+           DirectoryInfo trashDirInfo = new FileInfo( trashFile ).Directory;
+           Console.WriteLine( "  trashDirInfo: " + trashDirInfo.Name );
+           trashDirInfo.Create(); //  make sure parent dirs exists (create if not)
+
+           Console.WriteLine( "move to trash - " + atticFile + " => " + trashFile );
+
+           // todo: add flag for dry run!!!
+           File.Move( atticFile, trashFile );
          }
 
          DirectoryInfo atticDirInfo = new FileInfo( atticFile ).Directory;
@@ -283,16 +307,26 @@ public class Merger
           string atticDir = atticRoot + relativeFlatDir;
           Console.WriteLine( "  atticDir: " + atticDir );
 
+          // if folder exits already - move it to attic
+          // -- if folder also exits in attic; move it to trash
           if( Directory.Exists( installDir ) )
           {
             if( Directory.Exists( atticDir ))
             {
-               // check - is it a hack to allow dirs in attic!!!
-               //  for now rename w/ timestamp to make space
-              
-               // if file exists in attic - rename with some classifier added
                string ts = DateTime.Now.ToString( "yyyy-MM-dd_HH-mm-ss.fff" );
-               Directory.Move( atticDir, atticDir+"."+ts );
+
+               // use a flat folder structure in trash
+               string trashRelativeFlatDir = relativeDir.Replace( @"\", "__I__" );
+               string trashDir = _trashRoot + @"\__" + ts + "__" + trashRelativeFlatDir + ".tmp";
+
+               // make sure dirs exists
+               DirectoryInfo trashDirInfo = Directory.GetParent( trashDir );
+               Console.WriteLine( "  trashDirInfo: " + trashDirInfo.Name );
+               trashDirInfo.Create(); //  make sure parent dirs exists (create if not)
+               
+               // todo: add flag for dry run!!!
+               Console.WriteLine( "move to trash - " + atticDir + " => " + trashDir );
+               Directory.Move( atticDir, trashDir );
             }
 
             DirectoryInfo atticParentDirInfo = Directory.GetParent( atticDir );
@@ -313,3 +347,4 @@ public class Merger
           Directory.Move( dir, installDir );
     }
 }  // class Merger
+
