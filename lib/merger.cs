@@ -74,8 +74,57 @@ public class Merger
           
        HandleUpdates( dl_updates, attic_updates );
        HandlePatches( dl_patches, attic_patches );
-    }
-  }
+       
+       // fix: swap all changed zips tooo!!!!!!!
+       //  add HandlePack() or similar ???
+       
+       // if all worked - swap manifest - as last step
+
+       string versionManifestFile = versionRoot+@"\"+_packName+@"\"+ manifestName + ".txt";
+       string atticManifestFile   = _atticRoot+@"\"+installedVersion+@"\"+_packName+@"\"+ manifestName + ".txt";
+       string installManifestFile = _installRoot+@"\"+_packName+@"\"+ manifestName + ".txt"; 
+       
+       // if file exits already - move it to attic
+       // -- if file also exits in attic; move it to trash
+       if( File.Exists( atticManifestFile ))
+       {
+          // use a flat folder structure in trash
+          string ts = DateTime.Now.ToString( "yyyy-MM-dd_HH-mm-ss.fff" );
+          string trashRelativeFile = installedVersion+@"\"+_packName+@"\"+ manifestName + ".txt";
+          string trashRelativeFlatFile = trashRelativeFile.Replace( @"\", "__I__" );
+          string trashFile = _trashRoot + @"\__" + ts + "__" + trashRelativeFlatFile + ".trash";
+
+          // make sure dirs exists
+          DirectoryInfo trashDirInfo = new FileInfo( trashFile ).Directory;
+          Console.WriteLine( "  trashDirInfo: " + trashDirInfo.Name );
+          trashDirInfo.Create(); //  make sure parent dirs exists (create if not)
+
+          Console.WriteLine( "move to trash - " + atticManifestFile + " => " + trashFile );
+
+           // todo: add flag for dry run!!!
+           File.Move( atticManifestFile, trashFile );
+       }
+
+       DirectoryInfo atticDirInfo = new FileInfo( atticManifestFile ).Directory;
+       Console.WriteLine( "  atticDirInfo: " + atticDirInfo.Name );
+       atticDirInfo.Create(); //  make sure parent dirs exists (create if not)
+            
+       Console.WriteLine( "move to attic - " + installManifestFile + " => " + atticManifestFile );
+            
+       // todo: add flag for dry run!!!
+       File.Move( installManifestFile, atticManifestFile );
+        
+          
+       DirectoryInfo installDirInfo = new FileInfo( installManifestFile ).Directory;
+       Console.WriteLine( "  installDirInfo: " + installDirInfo.Name );
+       installDirInfo.Create(); //  make sure parent dirs exists (create if not)
+
+       Console.WriteLine( "move update to install - " + versionManifestFile + " => " + installManifestFile );
+
+       // todo: add flag for dry run!!!
+       File.Move( versionManifestFile, installManifestFile );
+    } // if versionRoot != null
+  } // method  MergeVersionPack
 
 
   public void MergeLatestPack( string manifestName )
