@@ -51,6 +51,14 @@ public class Merger
 
   public void MergeVersionPack( string manifestName )
   {
+    // check if installRoot and donwloadRoot exist? if not do nothing; return
+    if( Directory.Exists( _installRoot )  == false ||
+        Directory.Exists( _downloadRoot ) == false )
+    {
+      Console.WriteLine( "downloadRoot >"+ _downloadRoot +"< missing; return - nothing to do" );
+      return;
+    }
+
     string installedVersion = Utils.FindPackVersion( _installRoot+@"\"+_packName+@"\"+ manifestName + ".txt" );
 
     string versionRoot  = FindVersionPackDir( manifestName );
@@ -129,6 +137,14 @@ public class Merger
 
   public void MergeLatestPack( string manifestName )
   {
+    // check if installRoot and donwloadRoot exist? if not do nothing; return
+    if( Directory.Exists( _installRoot )  == false ||
+        Directory.Exists( _downloadRoot ) == false )
+    {
+      Console.WriteLine( "downloadRoot >"+ _downloadRoot +"< missing; return - nothing to do" );
+      return;
+    }
+
     // string installedVersion = Utils.FindPackVersion( _installRoot+@"\"+_packName+@"\"+ manifestName + ".txt" );
 
     // todo/fix:
