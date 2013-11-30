@@ -167,7 +167,7 @@ public class Merger
        }
 
        // we're done - move pack to trash (for clean-up)
-       HandlePack( versionRoot );
+       HandlePack( latestRoot );
     }
   }
 

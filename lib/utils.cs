@@ -17,10 +17,9 @@ public class Utils
 
   public static bool DirMissing( string dir )
   {
-    return Directory.Exists( dir ) == false
+    return Directory.Exists( dir ) == false;
   }
 
-  
   public static void FileMoveAndCreateDirs( string sourceFile, string destFile )
   {
     // make sure dest dirs exists
