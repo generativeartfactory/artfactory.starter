@@ -398,7 +398,7 @@ public class Merger
       string trashFile = _trashRoot + @"\xx_" + ts + "__" + trashRelativeFlatFile + ".trash";
 
        // todo: add flag for dry run!!!
-       Console.WriteLine( "move to trash - " + atticManifestFile + " => " + trashFile );
+       Console.WriteLine( "move to trash - " + file + " => " + trashFile );
        FileUtils.MoveAndCreateDirs( file, trashFile );
     }
 
