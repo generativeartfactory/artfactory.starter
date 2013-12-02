@@ -21,10 +21,8 @@ public class Merger
   string _atticRoot;    // "old" updates n patches (might get restored)
   string _trashRoot;    // trash - files and folders no longer used (mostly for used for duplicates that get moved from attic)
 
-   // todo/fix: rename to _metaName or metaFolderName ??   to avoid confusion???
-   //  e.g. pack (e.g. packRoot) <=> metaRoot used for pack root e.g. <packRoot>/<metaName>
-   
-  string _packName;  // e.g  meta or pkg or package or paket etc. - where zips and manifest gets stored
+
+  string _metaName;  // e.g  meta or pkg or package or paket etc. - where manifest gets stored
 
   public Merger( string installRoot, string downloadRoot, string atticRoot, string trashRoot )
   {
@@ -35,7 +33,7 @@ public class Merger
     _atticRoot    = atticRoot;
     _trashRoot    = trashRoot;
 
-    _packName  = "paket";
+    _metaName  = "paket";
 
     Console.WriteLine( "merger folders:" );
     Console.WriteLine( "  installRoot:  >"+ _installRoot  + "<" );
@@ -56,19 +54,19 @@ public class Merger
   public void MergeVersionPack( string manifestName )
   {
     // check if installRoot and donwloadRoot exist? if not do nothing; return
-    if( Utils.DirMissing( _installRoot ))
+    if( DirUtils.Missing( _installRoot ))
     {
       Console.WriteLine( "installRoot >"+ _installRoot +"< missing; return - nothing to do" );
       return;
     }
 
-    if( Utils.DirMissing( _downloadRoot ))
+    if( DirUtils.Missing( _downloadRoot ))
     {
       Console.WriteLine( "downloadRoot >"+ _downloadRoot +"< missing; return - nothing to do" );
       return;
     }
 
-    string installedVersion = Utils.FindPackVersion( _installRoot+@"\"+_packName+@"\"+ manifestName + ".txt" );
+    string installedVersion = Utils.FindPackVersion( _installRoot+@"\"+_metaName+@"\"+ manifestName + ".txt" );
 
     string versionRoot  = FindVersionPackDir( manifestName );
 
@@ -78,29 +76,20 @@ public class Merger
 
        string dl_updates = versionRoot+@"\updates";
        string dl_patches = versionRoot+@"\patches";
-       string dl_meta    = versionRoot+@"\"+_packName;   // e.g. <manifestName>-<version>\paket
-       // fix: rename packName to metaName
+       string dl_meta    = versionRoot+@"\"+_metaName;   // e.g. <manifestName>-<version>\paket
 
        string attic_updates = _atticRoot+@"\"+manifestName+"-"+installedVersion+@"\updates";
        string attic_patches = _atticRoot+@"\"+manifestName+"-"+installedVersion+@"\patches";
-       string attic_meta    = _atticRoot+@"\"+manifestName+"-"+installedVersion+@"\"+_packName;  // e.g. <manifestName>-<version>\paket
-       // fix: rename packName to metaName
+       string attic_meta    = _atticRoot+@"\"+manifestName+"-"+installedVersion+@"\"+_metaName;  // e.g. <manifestName>-<version>\paket
           
        if( Directory.Exists( dl_updates ))
-       {
          HandleUpdates( dl_updates, attic_updates );
-       }
        
        if( Directory.Exists( dl_patches ))
-       {
          HandlePatches( dl_patches, attic_patches );
-       }
 
-       if( Directory.Exists( dl_meta ))
-       {
-         // if all worked - swap manifest - as last step
-         HandleManifest( manifestName, dl_meta, attic_meta );
-       }
+       if( Directory.Exists( dl_meta ))  // if all worked - swap manifest - as last step
+        HandleManifest( manifestName, dl_meta, attic_meta );
 
        // we're done - move pack to trash (for clean-up)
        HandlePack( versionRoot );
@@ -112,19 +101,19 @@ public class Merger
   public void MergeLatestPack( string manifestName )
   {
     // check if installRoot and donwloadRoot exist? if not do nothing; return
-    if( Utils.DirMissing( _installRoot ))
+    if( DirUtils.Missing( _installRoot ))
     {
       Console.WriteLine( "installRoot >"+ _installRoot +"< missing; return - nothing to do" );
       return;
     }
 
-    if( Utils.DirMissing( _downloadRoot ))
+    if( DirUtils.Missing( _downloadRoot ))
     {
       Console.WriteLine( "downloadRoot >"+ _downloadRoot +"< missing; return - nothing to do" );
       return;
     }
 
-    // string installedVersion = Utils.FindPackVersion( _installRoot+@"\"+_packName+@"\"+ manifestName + ".txt" );
+    // string installedVersion = Utils.FindPackVersion( _installRoot+@"\"+_metaName+@"\"+ manifestName + ".txt" );
 
     // todo/fix:
     //  new method!!!!   use FindPackTimestamp()  - assumes no VERSION in manifest
@@ -138,33 +127,25 @@ public class Merger
 
        string dl_updates = latestRoot+@"\updates";
        string dl_patches = latestRoot+@"\patches";
-       string dl_meta    = latestRoot+@"\"+_packName;   // e.g. <manifestName>-<version>\paket
-       // fix: rename packName to metaName
+       string dl_meta    = latestRoot+@"\"+_metaName;   // e.g. <manifestName>-<version>\paket
 
        // note: latest assumes no version; will use timestamp of manifestFile for now
        //   roughly equals the download date ??
-       string installedVersion =  DateTime.Now.ToString( "yyyy-MM-dd_HH-mm-ss.fff" );
+       string installedVersion =  Utils.Timestamp();
 
        // use manifestName instead of latest ?? e.g. kv or similar ?? or just merge everything together anyway!!
        string attic_updates = _atticRoot+@"\"+manifestName+@"-latest\"+installedVersion+@"\updates";
        string attic_patches = _atticRoot+@"\"+manifestName+@"-latest\"+installedVersion+@"\patches";
-       string attic_meta    = _atticRoot+@"\"+manifestName+@"-latest\"+installedVersion+@"\"+_packName;  // e.g. <manifestName>-<version>\paket
+       string attic_meta    = _atticRoot+@"\"+manifestName+@"-latest\"+installedVersion+@"\"+_metaName;  // e.g. <manifestName>-<version>\paket
 
        if( Directory.Exists( dl_updates ))
-       {
          HandleUpdates( dl_updates, attic_updates );
-       }
 
        if( Directory.Exists( dl_patches ))
-       {
          HandlePatches( dl_patches, attic_patches );
-       }
 
-       if( Directory.Exists( dl_meta ))
-       {
-         // if all worked - swap manifest - as last step
+       if( Directory.Exists( dl_meta ))  // if all worked - swap manifest - as last step
          HandleManifest( manifestName, dl_meta, attic_meta );
-       }
 
        // we're done - move pack to trash (for clean-up)
        HandlePack( latestRoot );
@@ -181,7 +162,7 @@ public class Merger
     {
       Console.WriteLine( "  bingo! latest found; checking manifest" );
 
-      string manifestFile = latestDir + @"\" + _packName+ @"\" + manifestName + ".txt";
+      string manifestFile = latestDir + @"\" + _metaName+ @"\" + manifestName + ".txt";
       Console.WriteLine( "   check if manifest >"+ manifestFile +"< exists?" );
           
       // check if manifestFile exits ??
@@ -225,7 +206,7 @@ public class Merger
        {
           Console.WriteLine( "** bingo - versioned folder found; checking if manifest exists" );
 
-          string manifestFile = dir + @"\" + _packName + @"\" + manifestName + ".txt";
+          string manifestFile = dir + @"\" + _metaName + @"\" + manifestName + ".txt";
           Console.WriteLine( "   check if manifest >"+ manifestFile +"< exists?" );
           
           // check if manifestFile exits ??
@@ -279,7 +260,7 @@ public class Merger
        string [] dirs = Directory.GetDirectories( root );
        foreach( string dir in dirs )
        {
-          if( Utils.IsDirFlat( dir ) || Utils.IsDirFull( dir ) || Utils.IsDirJavaWebArchive( dir ) )
+          if( DirUtils.IsFlat( dir ) || DirUtils.IsFull( dir ) || DirUtils.IsJavaWebArchive( dir ) )
           {
             HandleUpdate( dir, updatesRoot, atticRoot );
           }
@@ -296,24 +277,9 @@ public class Merger
     {
       Console.WriteLine( "process pack dir: " + dir );
 
-      // note: relativeDir will NOT start with slash e.g. weblibs\private or \weblibs\private
-      // cut off updatesRoot
-      string relativeDir = dir.Substring( _downloadRoot.Length+1, dir.Length-_downloadRoot.Length-1 ); 
-      Console.WriteLine( "  relative: " + relativeDir );
-
-      // fix: (re)use Utils.Timestamp() - why? why not?
-      string ts = DateTime.Now.ToString( "yyyy-MM-dd_HH-mm-ss.fff" );
-
-      // use a flat folder structure in trash
-      string trashRelativeFlatDir = relativeDir.Replace( @"\", "__I__" );
-      string trashDir = _trashRoot + @"\__" + ts + "__" + trashRelativeFlatDir + ".trash";
-
-      // todo: add flag for dry run!!!
-      Console.WriteLine( "move to trash - " + dir + " => " + trashDir );
-      Utils.DirMoveAndCreateDirs( dir, trashDir );
+      // cleanup pack - (move everything remaining after merge to trash)
+      MoveDirToTrash( dir, _downloadRoot );
     }
-
-
 
     void HandleManifest( string manifestName, string metaRoot, string atticRoot )
     {
@@ -321,36 +287,23 @@ public class Merger
 
        string versionManifestFile = metaRoot+@"\"+ manifestName + ".txt";
        string atticManifestFile   = atticRoot+@"\"+ manifestName + ".txt";
-       string installManifestFile = _installRoot+@"\"+_packName+@"\"+ manifestName + ".txt"; 
+       string installManifestFile = _installRoot+@"\"+_metaName+@"\"+ manifestName + ".txt"; 
        
        // if file exits in attic; move it to trash
        if( File.Exists( atticManifestFile ))
        {
-          // use a flat folder structure in trash
-          // fix: (re)use Utils.Timestamp() - why? why not?
-          string ts = DateTime.Now.ToString( "yyyy-MM-dd_HH-mm-ss.fff" );
-
-          // note: relativeFile will NOT start with slash e.g. weblibs\private NOT \weblibs\private
-          // -- cut off atticRoot (e.g. <install_dir>/downloads/attic) - results in <manifestName>-<version>/<packName>/<manifestName>.txt
-          string trashRelativeFile = atticManifestFile.Substring( _atticRoot.Length+1, atticManifestFile.Length-_atticRoot.Length-1 );   
-          Console.WriteLine( "  trashRelativeFile: " + trashRelativeFile );
-          string trashRelativeFlatFile = trashRelativeFile.Replace( @"\", "__I__" );
-          string trashFile = _trashRoot + @"\__" + ts + "__" + trashRelativeFlatFile + ".trash";
-
-           // todo: add flag for dry run!!!
-           Console.WriteLine( "move to trash - " + atticManifestFile + " => " + trashFile );
-           Utils.FileMoveAndCreateDirs( atticManifestFile, trashFile );
+          MoveFileToTrash( atticManifestFile, _atticRoot ); // note: use base attic root (will include version/latest etc.)
        }
 
        // note: assume installManifest exists
        //   will crash if missing - it's a feature!! manifest required for now
        // todo: add flag for dry run!!!
        Console.WriteLine( "move to attic - " + installManifestFile + " => " + atticManifestFile );
-       Utils.FileMoveAndCreateDirs( installManifestFile, atticManifestFile );
+       FileUtils.MoveAndCreateDirs( installManifestFile, atticManifestFile );
 
        // todo: add flag for dry run!!!
        Console.WriteLine( "move manifest to install - " + versionManifestFile + " => " + installManifestFile );
-       Utils.FileMoveAndCreateDirs( versionManifestFile, installManifestFile );
+       FileUtils.MoveAndCreateDirs( versionManifestFile, installManifestFile );
     }
 
 
@@ -376,42 +329,32 @@ public class Merger
        {
          if( File.Exists( atticFile ))
          {
-           // use a flat folder structure in trash
-           string ts = DateTime.Now.ToString( "yyyy-MM-dd_HH-mm-ss.fff" );
-           string trashRelativeFlatFile = relativeFile.Replace( @"\", "__I__" );
-           string trashFile = _trashRoot + @"\__" + ts + "__" + trashRelativeFlatFile + ".trash";
-
-           // todo: add flag for dry run!!!
-           Console.WriteLine( "move to trash - " + atticFile + " => " + trashFile );
-           Utils.FileMoveAndCreateDirs( atticFile, trashFile );
+           MoveFileToTrash( atticFile, _atticRoot ); // note: use base attic root (will include version/latest etc.)
          }
-
+ 
          // todo: add flag for dry run!!!
          Console.WriteLine( "move to attic - " + installFile + " => " + atticFile );
-         Utils.FileMoveAndCreateDirs( installFile, atticFile );
+         FileUtils.MoveAndCreateDirs( installFile, atticFile );
         }
 
         // todo: add flag for dry run!!!
         Console.WriteLine( "move update to install - " + file + " => " + installFile );
-        Utils.FileMoveAndCreateDirs( file, installFile );
+        FileUtils.MoveAndCreateDirs( file, installFile );
     }
 
     void HandleUpdate( string dir, string updatesRoot, string atticRoot )
     {
           Console.WriteLine( "process dir: " + dir );
-          
-          // note: relativeDir will NOT start with slash e.g. weblibs\private or \weblibs\private
-          string relativeFlatDir = dir.Substring( updatesRoot.Length+1, dir.Length-updatesRoot.Length-1 );   // cut off updatesRoot
-          // todo: check if it works w/ multiple replaces (works like gsub not sub) ???
-          string relativeDir =  relativeFlatDir.Replace( "__I__", @"\" );     // replace __I__ with proper folder separator, that is, => \
 
-          Console.WriteLine( "  relativeFlat: " + relativeFlatDir );
+          // note: relativeDir will NOT start with slash e.g. weblibs\private or \weblibs\private
+          //  -- cut off updatesRoot
+          string relativeDir = dir.Substring( updatesRoot.Length+1, dir.Length-updatesRoot.Length-1 );
           Console.WriteLine( "  relative: " + relativeDir );
 
           string installDir = _installRoot + @"\"+ relativeDir;
           Console.WriteLine( "  installDir: " + installDir );
 
-          string atticDir = atticRoot + @"\"+ relativeFlatDir;
+          string atticDir = atticRoot + @"\"+ relativeDir;
           Console.WriteLine( "  atticDir: " + atticDir );
 
           // if folder exits already - move it to attic
@@ -420,24 +363,60 @@ public class Merger
           {
             if( Directory.Exists( atticDir ))
             {
-               string ts = DateTime.Now.ToString( "yyyy-MM-dd_HH-mm-ss.fff" );
-
-               // use a flat folder structure in trash
-               string trashRelativeFlatDir = relativeDir.Replace( @"\", "__I__" );
-               string trashDir = _trashRoot + @"\__" + ts + "__" + trashRelativeFlatDir + ".trash";
-               
-               // todo: add flag for dry run!!!
-               Console.WriteLine( "move to trash - " + atticDir + " => " + trashDir );
-               Utils.DirMoveAndCreateDirs( atticDir, trashDir );
+               MoveDirToTrash( atticDir, _atticRoot ); // note: use base attic root (will include version/latest etc.)
             }
+ 
             // todo: add flag for dry run!!!
             Console.WriteLine( "move to attic - " + installDir + " => " + atticDir );
-            Utils.DirMoveAndCreateDirs( installDir, atticDir );
+            DirUtils.MoveAndCreateDirs( installDir, atticDir );
           }
 
           // todo: add flag for dry run!!!
           Console.WriteLine( "move update to install - " + dir + " => " + installDir );
-          Utils.DirMoveAndCreateDirs( dir, installDir );
+          DirUtils.MoveAndCreateDirs( dir, installDir );
+    }
+
+
+    void MoveFileToTrash( string file, string root )
+    {
+      // root - used for calculate relative path e.g.   file-root = relative
+      //  e.g.
+      //   c:\test\downloads\attic\pack-v2014.01.01\pack\pack.txt
+      //   c:\test\downloads\attic\pack-v2014.01.01
+
+      // use: better name - move to trash ?? etc.
+      // move to trash
+
+      // use a flat folder structure in trash
+      // note: relativeFile will NOT start with slash e.g. weblibs\private NOT \weblibs\private
+      // -- cut off atticRoot (e.g. <install_dir>/downloads/attic) - results in <manifestName>-<version>/<metaName>/<manifestName>.txt
+      string trashRelativeFile = file.Substring( root.Length+1, file.Length-root.Length-1 );   
+      Console.WriteLine( "  trashRelativeFile: " + trashRelativeFile );
+      
+      string ts = Utils.Timestamp();
+      string trashRelativeFlatFile = trashRelativeFile.Replace( @"\", "__I__" );
+      string trashFile = _trashRoot + @"\xx_" + ts + "__" + trashRelativeFlatFile + ".trash";
+
+       // todo: add flag for dry run!!!
+       Console.WriteLine( "move to trash - " + atticManifestFile + " => " + trashFile );
+       FileUtils.MoveAndCreateDirs( file, trashFile );
+    }
+
+    void MoveDirToTrash( string dir, string root )
+    {
+      // use a flat folder structure in trash
+      // note: relativeDir will NOT start with slash e.g. weblibs\private or \weblibs\private
+      // -- cut off updatesRoot
+      string trashRelativeDir = dir.Substring( root.Length+1, dir.Length-root.Length-1 );
+      Console.WriteLine( "  trashRelativeFile: " + trashRelativeDir );
+
+      string ts = Utils.Timestamp();
+      string trashRelativeFlatDir = trashRelativeDir.Replace( @"\", "__I__" );
+      string trashDir = _trashRoot + @"\xx_" + ts + "__" + trashRelativeFlatDir + ".trash";
+
+      // todo: add flag for dry run!!!
+      Console.WriteLine( "move to trash - " + dir + " => " + trashDir );
+      DirUtils.MoveAndCreateDirs( dir, trashDir );
     }
 
 }  // class Merger

@@ -3,34 +3,51 @@ using System.IO;
 using System.Text.RegularExpressions;
 
 
-////
-// fix:
-//
-// split into FileUtils  e.g. FileUtils.MoveAndCreateDirs()
-//  and DirUtils   e.g. DirUtils.Missing( ) DirUtils.MoveAndCreateDirs()
-//  and PackUtils  e.g. PackUtils.FindVersion(), PackUtils.FindLatest ?? etc.
-//  and Utils   e.g. Utils.Timestamp()
-//  etc.
-
-public class Utils
+public class DirUtils
 {
-
-  public static bool DirMissing( string dir )
+  public static bool Missing( string dir )
   {
     return Directory.Exists( dir ) == false;
   }
 
-  public static void FileMoveAndCreateDirs( string sourceFile, string destFile )
+  public static bool IsFlat( string path )
   {
-    // make sure dest dirs exists
-    DirectoryInfo destDirInfo = new FileInfo( destFile ).Directory;
-    Console.WriteLine( "  file move - destDirInfo: " + destDirInfo.Name );
-    destDirInfo.Create();  //  make sure parent dir(s) exists (create if not) - check if it works for more than one dir/level
-
-    File.Move( sourceFile, destFile );
+     return path.Contains( "__I__" );
   }
 
-  public static void DirMoveAndCreateDirs( string sourceDir, string destDir )
+  public static bool IsFull( string path )
+  {
+     // has some files (e.g. documents, that is, not just folders/directories)
+     string [] files = Directory.GetFiles( path );
+     return files.Length > 0;
+  }
+
+  public static bool IsJavaWebArchive( string path )
+  {
+    // check for "root/top" folders WEB-INF & META-INF for now
+    string [] dirs = Directory.GetDirectories( path );
+       
+    bool meta_inf_found = false;
+    bool web_inf_found  = false;
+       
+    foreach( string dir in dirs )
+    {
+       if( dir.EndsWith( @"\META-INF" ))
+       {
+          // Console.WriteLine( "found \\META-INF");
+          meta_inf_found = true;
+       }
+       if( dir.EndsWith( @"\WEB-INF" ))
+       {
+         // Console.WriteLine( "found \\WEB-INF" );
+         web_inf_found = true;
+       }
+    }
+    
+    return meta_inf_found && web_inf_found;
+  }
+
+  public static void MoveAndCreateDirs( string sourceDir, string destDir )
   {
     // make sure parent dirs exists
     DirectoryInfo parentDirInfo = Directory.GetParent( destDir );
@@ -40,7 +57,36 @@ public class Utils
     Directory.Move( sourceDir, destDir );
   }
 
+} // class DirUtils
 
+
+public class FileUtils
+{
+  public static void MoveAndCreateDirs( string sourceFile, string destFile )
+  {
+    // make sure dest dirs exists
+    DirectoryInfo destDirInfo = new FileInfo( destFile ).Directory;
+    Console.WriteLine( "  file move - destDirInfo: " + destDirInfo.Name );
+    destDirInfo.Create();  //  make sure parent dir(s) exists (create if not) - check if it works for more than one dir/level
+
+    File.Move( sourceFile, destFile );
+  }
+} // class FileUtils
+
+
+
+public class Utils
+{
+
+  public static string Timestamp()
+  {
+    // note: make sure string is a valid file name/path segement
+    return DateTime.Now.ToString( "yyyy-MM-dd_HH-mm-ss.fff" );
+  }
+
+
+  ////////
+  // fix: use/move to PackUtils - why? why not???
 
   public static string FindPackVersion( string path )
   {
@@ -66,43 +112,8 @@ public class Utils
        // return "latest";   // todo: if not found; return nil or "missing" something else? why? why not?
        return null;  // no version found in paket.txt
   }
-    
-  public static bool IsDirFlat( string path )
-  {
-     return path.Contains( "__I__" );
-  }
 
-  public static bool IsDirFull( string path )
-  {
-     // has some files (e.g. documents, that is, not just folders/directories)
-     string [] files = Directory.GetFiles( path );
-     return files.Length > 0;
-  }
-
-  public static bool IsDirJavaWebArchive( string path )
-  {
-    // check for "root/top" folders WEB-INF & META-INF for now
-    string [] dirs = Directory.GetDirectories( path );
-       
-    bool meta_inf_found = false;
-    bool web_inf_found  = false;
-       
-    foreach( string dir in dirs )
-    {
-       if( dir.EndsWith( @"\META-INF" ))
-       {
-          // Console.WriteLine( "found \\META-INF");
-          meta_inf_found = true;
-       }
-       if( dir.EndsWith( @"\WEB-INF" ))
-       {
-         // Console.WriteLine( "found \\WEB-INF" );
-         web_inf_found = true;
-       }
-    }
-    
-    return meta_inf_found && web_inf_found;
-  }
+  
 
 } // class Utils
 
