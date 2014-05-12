@@ -7,10 +7,13 @@ using System.Text.RegularExpressions;
 //  core principle
 //   - NEVER copy
 //   - NEVER delete
-//   -  just move files
+//   --  just move files
 //
+//  minor result =>  allow later restore (should be possible)
 //
-///  minor result =>  allow later restore (should be possible)
+// NOTE: new option if you use keep=false
+//         NEVER copy still holds,
+//          but (old) files and dirs get deleted
 
 
 
@@ -21,19 +24,22 @@ public class Merger
   string _atticRoot;    // "old" updates n patches (might get restored)
   string _trashRoot;    // trash - files and folders no longer used (mostly for used for duplicates that get moved from attic)
 
-
   string _metaName;  // e.g  meta or pkg or package or paket etc. - where manifest gets stored
 
-  public Merger( string installRoot, string downloadRoot, string atticRoot, string trashRoot )
+  bool _keep;  // e.g. keep (backup) old files and folders -- default is true
+
+  public Merger( string installRoot, string downloadRoot, string atticRoot, string trashRoot, bool keep )
   {
     // todo: can we call main constructor? - use super() or similar?? possible
-    
+
     _installRoot  = installRoot;   // use appRoot ??
     _downloadRoot = downloadRoot;
     _atticRoot    = atticRoot;
     _trashRoot    = trashRoot;
 
     _metaName  = "paket";
+
+    _keep = keep;
 
     Console.WriteLine( "merger folders:" );
     Console.WriteLine( "  installRoot:  >"+ _installRoot  + "<" );
@@ -46,7 +52,17 @@ public class Merger
    : this( installRoot,
            installRoot + @"\downloads",
            installRoot + @"\downloads\attic",
-           installRoot + @"\downloads\trash" )
+           installRoot + @"\downloads\trash",
+           true )
+  {
+  }
+
+  public Merger( string installRoot, bool keep )
+   : this( installRoot,
+           installRoot + @"\downloads",
+           installRoot + @"\downloads\attic",
+           installRoot + @"\downloads\trash",
+           keep )
   {
   }
 
@@ -272,17 +288,35 @@ public class Merger
        }
     }
 
-
     void HandlePack( string dir )
     {
       Console.WriteLine( "process pack dir: " + dir );
 
-      // cleanup pack - (move everything remaining after merge to trash)
-      MoveDirToTrash( dir, _downloadRoot );
+      if( _keep == false )
+      {
+        Console.WriteLine( "delete pack dir - " + dir );
+        // Directory.Delete( dir, true );  // note: use true flag for recursive delete!!
+        // DirUtils.DeleteRecursivelyPlease( dir );
+        MoveDirToTrashAndDeletePlease( dir, _downloadRoot );
+      }
+      else
+      {
+        // cleanup pack - (move everything remaining after merge to trash)
+        MoveDirToTrash( dir, _downloadRoot );
+      }
     }
 
     void HandleManifest( string manifestName, string metaRoot, string atticRoot )
     {
+      // note: for now always keep a history (backup) of manifest
+      //   - small file size
+      //   if keep==false delete/remove all other files (just keep manifest)
+      
+      //
+      // fix: for keep == false
+      //   use "flat" folde structure e.g. no metaRoot ??? just version e.g
+      //  <version>/paket.txt instead of <version>/paket/paket.txt
+      
        Console.WriteLine( "process manifestName: " + manifestName );
 
        string versionManifestFile = metaRoot+@"\"+ manifestName + ".txt";
@@ -327,14 +361,33 @@ public class Merger
        // -- if file also exits in attic; move it to trash
        if( File.Exists( installFile ) )
        {
-         if( File.Exists( atticFile ))
+         if( _keep == false )
          {
-           MoveFileToTrash( atticFile, _atticRoot ); // note: use base attic root (will include version/latest etc.)
+           /// quick fix/hack: get name from .exe/.dll !!!! do NOT hardcode
+           // note: cannot delete ourselfs e.g. usomerged.exe !!! check if move works ??
+           if( installFile.Contains( "usomerged" ) )
+           {
+             Console.WriteLine( "move (usomerged) file to trash - " + installFile );
+             MoveFileToTrash( installFile, _installRoot );
+           }
+           else
+           {
+             Console.WriteLine( "delete file - " + installFile );
+             // File.Delete( installFile );
+             MoveFileToTrashAndDeletePlease( installFile, _installRoot );
+           }
          }
+         else
+         {
+           if( File.Exists( atticFile ))
+           {
+             MoveFileToTrash( atticFile, _atticRoot ); // note: use base attic root (will include version/latest etc.)
+           }
  
-         // todo: add flag for dry run!!!
-         Console.WriteLine( "move to attic - " + installFile + " => " + atticFile );
-         FileUtils.MoveAndCreateDirs( installFile, atticFile );
+           // todo: add flag for dry run!!!
+           Console.WriteLine( "move to attic - " + installFile + " => " + atticFile );
+           FileUtils.MoveAndCreateDirs( installFile, atticFile );
+         }
         }
 
         // todo: add flag for dry run!!!
@@ -361,14 +414,23 @@ public class Merger
           // -- if folder also exits in attic; move it to trash
           if( Directory.Exists( installDir ) )
           {
-            if( Directory.Exists( atticDir ))
+            if( _keep == false )
             {
-               MoveDirToTrash( atticDir, _atticRoot ); // note: use base attic root (will include version/latest etc.)
+              Console.WriteLine( "delete dir - " + installDir );
+              // Directory.Delete( installDir, true );  // note: use true flag for recursive delete!!
+              // DirUtils.DeleteRecursivelyPlease( installdir );
+              MoveDirToTrashAndDeletePlease( installDir, _installRoot );
             }
- 
-            // todo: add flag for dry run!!!
-            Console.WriteLine( "move to attic - " + installDir + " => " + atticDir );
-            DirUtils.MoveAndCreateDirs( installDir, atticDir );
+            else
+            {
+              if( Directory.Exists( atticDir ))
+              {
+                MoveDirToTrash( atticDir, _atticRoot ); // note: use base attic root (will include version/latest etc.)
+              }
+              // todo: add flag for dry run!!!
+              Console.WriteLine( "move to attic - " + installDir + " => " + atticDir );
+              DirUtils.MoveAndCreateDirs( installDir, atticDir );
+            }
           }
 
           // todo: add flag for dry run!!!
@@ -377,7 +439,7 @@ public class Merger
     }
 
 
-    void MoveFileToTrash( string file, string root )
+    void MoveFileToTrashAndDeletePleaseWorker( string file, string root, bool delete )
     {
       // root - used for calculate relative path e.g.   file-root = relative
       //  e.g.
@@ -400,10 +462,25 @@ public class Merger
        // todo: add flag for dry run!!!
        Console.WriteLine( "move to trash - " + file + " => " + trashFile );
        FileUtils.MoveAndCreateDirs( file, trashFile );
+       
+       if( delete )
+         FileUtils.DeletePlease( trashFile );
     }
 
-    void MoveDirToTrash( string dir, string root )
+    void MoveFileToTrashAndDeletePlease( string file, string root )
     {
+      MoveFileToTrashAndDeletePleaseWorker( file, root, true );
+    }
+
+    void MoveFileToTrash( string file, string root )
+    {
+      MoveFileToTrashAndDeletePleaseWorker( file, root, false );
+    }
+
+    void MoveDirToTrashAndDeletePleaseWorker( string dir, string root, bool delete )
+    {
+      // 1) step 1 -- move to trash
+
       // use a flat folder structure in trash
       // note: relativeDir will NOT start with slash e.g. weblibs\private or \weblibs\private
       // -- cut off updatesRoot
@@ -417,6 +494,21 @@ public class Merger
       // todo: add flag for dry run!!!
       Console.WriteLine( "move to trash - " + dir + " => " + trashDir );
       DirUtils.MoveAndCreateDirs( dir, trashDir );
+
+      // 2) step 2 (optional) -- delete
+      
+      if( delete )
+        DirUtils.DeleteRecursivelyPlease( trashDir );
+    }
+
+    void MoveDirToTrashAndDeletePlease( string dir, string root )
+    {
+      MoveDirToTrashAndDeletePleaseWorker( dir, root, true );
+    }
+
+    void MoveDirToTrash( string dir, string root )
+    {
+      MoveDirToTrashAndDeletePleaseWorker( dir, root, false );
     }
 
 }  // class Merger
