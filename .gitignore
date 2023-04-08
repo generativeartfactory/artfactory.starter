@@ -1,9 +1,0 @@
-#####
-# ignore exe and test driver
-
-lib/test.cs
-lib/test.exe
-
-
-
-
