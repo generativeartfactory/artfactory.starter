@@ -165,7 +165,7 @@ Let's try - [**chopper/generate**](chopper/generate.rb):
 ```
 Solid Blue,  Aqua, Hat 22, Smoker, 3D, Banana
 Solid Gold, Ap3, Hat Chopper, Non-Smoker, Big Shades, Golden
-Solid Black, Midnight, Hat 10, Smoker, Classic Shades, Diamon Cross
+Solid Black, Midnight, Hat 10, Smoker, Classic Shades, Diamond Cross
 ```
 
 ![](i/chopper0.png)
@@ -206,9 +206,9 @@ Golden Phunk
 Let's try - [**fuks/generate**](fuks/generate.rb):
 
 ```
-Robot Fuk, Shaved, Purple Hair, Nose, Vape, VR, No Earrings, Diamond Chain
+Robot Fuk, Shaved, Purple Hair, Nose, Vape, VR, Diamond Chain
 Undead Fuk, Shaved, Messy Hair, Nose, Smile, Laser, Diamond Stud, Silver Chain
-Human Fuk, Chin Strap, Fast Food Cap, Nose, Grin, Nerd Glasses, No Earrings, No Chains
+Human Fuk, Chin Strap, Fast Food Cap, Nose, Grin, Nerd Glasses
 ```
 
 ![](i/fuks0.png)
