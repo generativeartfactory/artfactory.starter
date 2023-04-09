@@ -151,10 +151,34 @@ Voila!
 
 
 
+
+
+### And Many More Collections
+
+Let's try some more...
+
+
+**Chopper (in 24×24px)**
+
+Samples:
+
+- SOLID BLUE,  AQUA, HAT 22, SMOKER, 3D, BANANA
+- SOLID GOLD, AP3, HAT CHOPPER, NON-SMOKER, BIG SHADES, GOLDEN
+- SOLID BLACK, MIDNIGHT, HAT 10, SMOKER, CLASSIC SHADES, DIAMOND CROSS
+
+![](i/chopper0.png)
+![](i/chopper1.png)
+![](i/chopper2.png)
+
+4x:
+
+![](i/chopper0@4x.png)
+![](i/chopper1@4x.png)
+![](i/chopper2@4x.png)
+
+
+
 and so on.
-
-
-
 
 
 
