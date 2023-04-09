@@ -78,11 +78,12 @@ edgepunks = Artfactory.read( 'edgepunks/spritesheet-24x24.png',
                              height: 24)
 
 specs = [
-# no.282
-  ['Pink', 'Dark Green Lizard', 'Dark Robe', 'Monster Mouth', 'Bat', 'Laser Eyes'],
-# no.468
+  # no.282
+  ['Pink', 'Dark Green Lizard', 'Dark Robe', 'Monster Mouth', 
+    'Bat', 'Laser Eyes'],
+  # no.468
   ['Pink', 'Purple Body', 'Dark Suit', 'Smile', 'Dark Hair', 'Dark Shades'],
-# no.678 (1/1)
+  # no.678 (1/1)
   ['Anatomy Of An Icon'],
 ]
 
@@ -123,7 +124,7 @@ chichis = Artfactory.read( 'chichis/spritesheet-32x32.png',
 specs = [
   ## no.15
   ['Wave', 'Magenta', 'Jersey',  'Lightning Bolt Earrings',
-    'Cbd Cig', 'Aviators', 'Beanie'],
+   'Cbd Cig', 'Aviators', 'Beanie'],
   ## no.8
   ['Palms', 'Silver', 'Suit', 'Simple Day', 'Smile', 'Xx', 'Rainbow'],
   ## 1/1
