@@ -177,6 +177,31 @@ Samples:
 ![](i/chopper2@4x.png)
 
 
+**Dank Punks (in 24×24px)**
+
+Samples:
+
+- Night Vibe, Pale, Clown Nose, Red Punk, Green Clown
+- Contrast, Tan, Black Hair, 3D Glasses
+- Golden Phunk
+
+
+![](i/dankpunks0.png)
+![](i/dankpunks1.png)
+![](i/dankpunks2.png)
+
+4x:
+
+![](i/dankpunks0@4x.png)
+![](i/dankpunks1@4x.png)
+![](i/dankpunks2@4x.png)
+
+
+
+
+
+
+
 
 and so on.
 
