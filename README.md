@@ -15,7 +15,7 @@ using the [**Art Factory machinery »**](https://github.com/generativeartfactory
 ### Collection №1 - Aliens vs Punks
 
 
-Let's try the Aliens vs Punks
+Let's try the Aliens vs Punks:
 
 ``` ruby
 require 'artfactory'

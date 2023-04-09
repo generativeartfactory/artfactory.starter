@@ -1,0 +1,14 @@
+#####
+# exclude all tmp directories
+o/
+tmp/
+tmp2/
+tmp3/
+
+
+
+##################
+# do NOT check in dev/test enviroment variables in .env (dot env files)
+.env
+.env.yml
+.env.yaml
