@@ -6,6 +6,11 @@ tmp2/
 tmp3/
 
 
+#########################
+#  exclude all generated pixel image directories
+24x24/
+32x32/
+
 
 ##################
 # do NOT check in dev/test enviroment variables in .env (dot env files)
