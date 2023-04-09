@@ -15,7 +15,7 @@ using the [**Art Factory machinery »**](https://github.com/generativeartfactory
 ### Collection №1 - Aliens vs Punks
 
 
-Let's try the Aliens vs Punks:
+Let's try the Aliens vs Punks - [**aliensvspunks/generate**](aliensvspunks/generate.rb):
 
 ``` ruby
 require 'artfactory'
@@ -69,7 +69,7 @@ Voila!
 ### Collection №2 - Edge Punks
 
 
-Let's try the Edge Punks:
+Let's try the Edge Punks  - [**edgepunks/generate**](edgepunks/generate.rb):
 
 ``` ruby
 edgepunks = Artfactory.read( 'edgepunks/spritesheet-24x24.png',
@@ -112,7 +112,7 @@ Voila!
 
 ### Collection №3 - Chi Chis
 
-Let's try the Chi Chis:
+Let's try the Chi Chis - [**chichis/generate**](chichis/generate.rb):
 
 ``` ruby
 chichis = Artfactory.read( 'chichis/spritesheet-32x32.png',
@@ -160,11 +160,13 @@ Let's try some more...
 
 **Chopper (in 24×24px)**
 
-Samples:
+Let's try - [**chopper/generate**](chopper/generate.rb):
 
-- SOLID BLUE,  AQUA, HAT 22, SMOKER, 3D, BANANA
-- SOLID GOLD, AP3, HAT CHOPPER, NON-SMOKER, BIG SHADES, GOLDEN
-- SOLID BLACK, MIDNIGHT, HAT 10, SMOKER, CLASSIC SHADES, DIAMOND CROSS
+```
+Solid Blue,  Aqua, Hat 22, Smoker, 3D, Banana
+Solid Gold, Ap3, Hat Chopper, Non-Smoker, Big Shades, Golden
+Solid Black, Midnight, Hat 10, Smoker, Classic Shades, Diamon Cross
+```
 
 ![](i/chopper0.png)
 ![](i/chopper1.png)
@@ -179,12 +181,13 @@ Samples:
 
 **Dank Punks (in 24×24px)**
 
-Samples:
+Let's try - [**dankpunks/generate**](dankpunks/generate.rb):
 
-- Night Vibe, Pale, Clown Nose, Red Punk, Green Clown
-- Contrast, Tan, Black Hair, 3D Glasses
-- Golden Phunk
-
+```
+Night Vibe, Pale, Clown Nose, Red Punk, Green Clown
+Contrast, Tan, Black Hair, 3D Glasses
+Golden Phunk
+```
 
 ![](i/dankpunks0.png)
 ![](i/dankpunks1.png)
@@ -198,7 +201,25 @@ Samples:
 
 
 
+**Fuks (in 24×24px)**
 
+Let's try - [**fuks/generate**](fuks/generate.rb):
+
+```
+Robot Fuk, Shaved, Purple Hair, Nose, Vape, VR, No Earrings, Diamond Chain
+Undead Fuk, Shaved, Messy Hair, Nose, Smile, Laser, Diamond Stud, Silver Chain
+Human Fuk, Chin Strap, Fast Food Cap, Nose, Grin, Nerd Glasses, No Earrings, No Chains
+```
+
+![](i/fuks0.png)
+![](i/fuks1.png)
+![](i/fuks2.png)
+
+4x:
+
+![](i/fuks0@4x.png)
+![](i/fuks1@4x.png)
+![](i/fuks2@4x.png)
 
 
 
