@@ -159,7 +159,7 @@ Voila!
 Let's try some more...
 
 
-**Chopper (in 24×24px)**
+#### Chopper (in 24×24px)
 
 Let's try - [**chopper/generate**](chopper/generate.rb):
 
@@ -180,7 +180,7 @@ Solid Black, Midnight, Hat 10, Smoker, Classic Shades, Diamond Cross
 ![](i/chopper2@4x.png)
 
 
-**Dank Punks (in 24×24px)**
+#### Dank Punks (in 24×24px)
 
 Let's try - [**dankpunks/generate**](dankpunks/generate.rb):
 
@@ -202,7 +202,7 @@ Golden Phunk
 
 
 
-**Fuks (in 24×24px)**
+#### Fuks (in 24×24px)
 
 Let's try - [**fuks/generate**](fuks/generate.rb):
 
@@ -223,7 +223,7 @@ Human Fuk, Chin Strap, Fast Food Cap, Nose, Grin, Nerd Glasses
 ![](i/fuks2@4x.png)
 
 
-### Inverse Punks (in 24×24px)
+#### Inverse Punks (in 24×24px)
 
 Let's try - [**inversepunks/generate**](inversepunks/generate.rb):
 
@@ -242,6 +242,53 @@ Inverted V2, Ape, Clear, Bandana, Classic Shades, Blue Medical Mask, Pink Sapphi
 ![](i/inversepunks0@4x.png)
 ![](i/inversepunks1@4x.png)
 ![](i/inversepunks2@4x.png)
+
+
+
+#### Mad Camels (in 32×32px)
+
+Let's try - [**madcamels/generate**](madcamels/generate.rb):
+
+```
+Cream, Zombie, Purple Cap, Earring Gold, Cool Glasses, Bubble Gum
+Purple,  Default, Thief Hat, Green Glasses, Bowtie, Pipe
+Green, Alien, Red Cap, Earring Gold, Laser Eye
+```
+
+![](i/madcamels0.png)
+![](i/madcamels1.png)
+![](i/madcamels2.png)
+
+4x:
+
+![](i/madcamels0@4x.png)
+![](i/madcamels1@4x.png)
+![](i/madcamels2@4x.png)
+
+
+
+
+#### Marcs (in 24×24px)
+
+Let's try - [**marcs/generate**](marcs/generate.rb):
+
+```
+Deal With It Devil
+Marc 4, Frumpy Hair, Green Shirt, Lasers, Cigarette
+Zombie, Green Eyes, Wild Hair, Mustache, Polarized
+```
+
+![](i/marcs0.png)
+![](i/marcs1.png)
+![](i/marcs2.png)
+
+4x:
+
+![](i/marcs0@4x.png)
+![](i/marcs1@4x.png)
+![](i/marcs2@4x.png)
+
+
 
 
 
