@@ -116,13 +116,10 @@ chichis = Artfactory.read( 'chichis/spritesheet-32x32.png',
                              height: 32)
 
 specs = [
-  ## no.15
-  ['Wave', 'Magenta', 'Jersey',  'Lightning Bolt Earrings',
+  ['Magenta', 'Jersey',  'Lightning Bolt Earrings',
    'Cbd Cig', 'Aviators', 'Beanie'],
-  ## no.8
-  ['Palms', 'Silver', 'Suit', 'Simple Day', 'Smile', 'Xx', 'Rainbow'],
-  ## 1/1
-  ['Chichi Phunk'],
+  ['Silver', 'Suit', 'Simple Day', 'Smile', 'Xx', 'Rainbow'],
+  ['Deep Teal', 'Stripes', 'Simple Day', 'Tongue Out', 'Cobain, Bald'],
 ]
 
 specs.each_with_index do |attributes, i|
