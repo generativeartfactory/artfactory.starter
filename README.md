@@ -286,9 +286,9 @@ Alien, Green Eyes, Gold Earring, Crazy Hair, Full Mustache Dark, Horned Rim Glas
 Let's try - [**nfl/generate**](nfl/generate.rb):
 
 ```
-Justin Fields
-Turf, Bot, Oakland, 13, Full Beard Light
-Goal Line, Base 5, Atlanta, 7, Full Beard Black
+Bot, Oakland, 13, Full Beard Light
+Base 5, Atlanta, 7, Full Beard Black
+Zombie, Los Angeles 2, 13, Full Beard Brown
 ```
 
 ![](i/nfl0.png)

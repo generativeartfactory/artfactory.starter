@@ -14,12 +14,9 @@ nfl = Artfactory.read( './nfl/spritesheet-23x23.png',
                          height: 23)
 
 specs = parse_data( <<TXT )
-  # no.2419
-  Justin Fields
-  # no.1594
-  Turf, Bot, Oakland, 13, Full Beard Light
-  # no.803
-  Goal Line, Base 5, Atlanta, 7, Full Beard Black
+  Bot, Oakland, 13, Full Beard Light
+  Base 5, Atlanta, 7, Full Beard Black
+  Zombie, Los Angeles 2, 13, Full Beard Brown
 TXT
 
 
