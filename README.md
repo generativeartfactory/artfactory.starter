@@ -155,9 +155,9 @@ Let's try some more...
 Let's try - [**chopper/generate**](chopper/generate.rb):
 
 ```
-Solid Blue,  Aqua, Hat 22, Smoker, 3D, Banana
-Solid Gold, Ap3, Hat Chopper, Non-Smoker, Big Shades, Golden
-Solid Black, Midnight, Hat 10, Smoker, Classic Shades, Diamond Cross
+Aqua, Hat 22, Smoker, 3D, Banana
+Ap3, Hat Chopper, Non-Smoker, Big Shades, Golden
+Midnight, Hat 10, Smoker, Classic Shades, Diamond Cross
 ```
 
 ![](i/chopper0.png)
@@ -176,9 +176,9 @@ Solid Black, Midnight, Hat 10, Smoker, Classic Shades, Diamond Cross
 Let's try - [**dankpunks/generate**](dankpunks/generate.rb):
 
 ```
-Night Vibe, Pale, Clown Nose, Red Punk, Green Clown
-Contrast, Tan, Black Hair, 3D Glasses
-Golden Phunk
+Pale,   Clown Nose, Red Punk, Green Clown
+Tan,    Black Hair, 3D Glasses
+Zombie, Black Mohawk, Dark Clown, Ok, Jay Z
 ```
 
 ![](i/dankpunks0.png)
