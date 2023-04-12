@@ -369,6 +369,27 @@ Zombie, Tanktop, Orange Side, 3D Glasses, Frown
 ![](i/punkapesyachtclub2@4x.png)
 
 
+#### Punkin Spicies (in 24×24px)
+
+Let's try - [**punkinspicies/generate**](punkinspicies/generate.rb):
+
+```
+Frankensteins Monster, Bride, Choker, Vape, Bloodtears, Mole, Hoopearring
+Demon, Darkhair, Goldchain, Knife, Hoopearring
+Jack O Lantern, Bride, Bloodtears
+```
+
+![](i/punkinspicies0.png)
+![](i/punkinspicies1.png)
+![](i/punkinspicies2.png)
+
+4x:
+
+![](i/punkinspicies0@4x.png)
+![](i/punkinspicies1@4x.png)
+![](i/punkinspicies2@4x.png)
+
+
 
 
 and so on.
