@@ -308,9 +308,9 @@ Zombie, Los Angeles 2, 13, Full Beard Brown
 Let's try - [**nomads/generate**](nomads/generate.rb):
 
 ```
-Plain, Male 6, Laser, No Really No Mad, Mohawkin
-Dark Plain, Male 2, Purple, No Really No Mad, Basement Dwellin
-Over The Rainbow Bridge For Nomad Bridge, Male 4, Purple, I AM NOT F ING MAD, Mohawkin
+Male 6, Laser, No Really No Mad, Mohawkin
+Male 2, Purple, No Really No Mad, Basement Dwellin
+Male 4, Purple, I AM NOT F ING MAD, Mohawkin
 ```
 
 ![](i/nomads0.png)
@@ -331,9 +331,9 @@ Over The Rainbow Bridge For Nomad Bridge, Male 4, Purple, I AM NOT F ING MAD, Mo
 Let's try - [**phunkapeorigins/generate**](phunkapeorigins/generate.rb):
 
 ```
-Blue 3, Chimpanzee 1, Arrow, Snow Visor, Tooth Plug, Diamond Chain
-Blue 5, Silver Back, Wild Monkey Hair, Focused, Silver Dangle, Gold Chain, Cigar
-Blue 1,  Yeti, Royal Crown, Matrix Shades, Silver Stud, Tooth Necklace, Tooth
+Chimpanzee 1, Arrow, Snow Visor, Tooth Plug, Diamond Chain
+Silver Back, Wild Monkey Hair, Focused, Silver Dangle, Gold Chain, Cigar
+Yeti, Royal Crown, Matrix Shades, Silver Stud, Tooth Necklace, Tooth
 ```
 
 ![](i/phunkapeorigins0.png)

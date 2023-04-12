@@ -11,12 +11,9 @@ nomads = Artfactory.read( './nomads/spritesheet-24x24.png',
                                       height: 24)
 
 specs = parse_data( <<TXT )
-  # No.1022
-  Plain, Male 6, Laser, No Really No Mad, Mohawkin
-  # No.259
-  Dark Plain, Male 2, Purple, No Really No Mad, Basement Dwellin
-  # No.4358
-  Over The Rainbow Bridge For Nomad Bridge, Male 4, Purple, I AM NOT F ING MAD, Mohawkin
+  Male 6, Laser, No Really No Mad, Mohawkin
+  Male 2, Purple, No Really No Mad, Basement Dwellin
+  Male 4, Purple, I AM NOT F ING MAD, Mohawkin
 TXT
 
 
