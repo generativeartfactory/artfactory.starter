@@ -14,12 +14,9 @@ inversepunks = Artfactory.read( './inversepunks/spritesheet-24x24.png',
                                       height: 24)
 
 specs = parse_data( <<TXT )
-  # No.856
-  Inverted V2, Alien, Pimple, Cap Forward, Eyes, Bubble Gum, White Gold Chain, Gold Earring
-  # No.390
-  Inverted V2, Alien, Clear, Knitted Cap, VR, White Gold Chain, Gold Earring
-  # No.223
-  Inverted V2, Ape, Clear, Bandana, Classic Shades, Blue Medical Mask, Pink Sapphire Necklace
+  Alien, Pimple, Cap Forward, Eyes, Bubble Gum, White Gold Chain, Gold Earring
+  Alien, Clear, Knitted Cap, VR, White Gold Chain, Gold Earring
+  Ape, Clear, Bandana, Classic Shades, Blue Medical Mask, Pink Sapphire Necklace
 TXT
 
 

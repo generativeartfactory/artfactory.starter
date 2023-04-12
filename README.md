@@ -219,9 +219,9 @@ Human Fuk, Chin Strap, Fast Food Cap, Nose, Grin, Nerd Glasses
 Let's try - [**inversepunks/generate**](inversepunks/generate.rb):
 
 ```
-Inverted V2, Alien, Pimple, Cap Forward, Eyes, Bubble Gum, White Gold Chain, Gold Earring
-Inverted V2, Alien, Clear, Knitted Cap, VR, White Gold Chain, Gold Earring
-Inverted V2, Ape, Clear, Bandana, Classic Shades, Blue Medical Mask, Pink Sapphire Necklace
+Alien, Pimple, Cap Forward, Eyes, Bubble Gum, White Gold Chain, Gold Earring
+Alien, Clear, Knitted Cap, VR, White Gold Chain, Gold Earring
+Ape, Clear, Bandana, Classic Shades, Blue Medical Mask, Pink Sapphire Necklace
 ```
 
 ![](i/inversepunks0.png)
@@ -241,9 +241,9 @@ Inverted V2, Ape, Clear, Bandana, Classic Shades, Blue Medical Mask, Pink Sapphi
 Let's try - [**madcamels/generate**](madcamels/generate.rb):
 
 ```
-Cream, Zombie, Purple Cap, Earring Gold, Cool Glasses, Bubble Gum
-Purple,  Default, Thief Hat, Green Glasses, Bowtie, Pipe
-Green, Alien, Red Cap, Earring Gold, Laser Eye
+Zombie, Purple Cap, Earring Gold, Cool Glasses, Bubble Gum
+Default, Thief Hat, Green Glasses, Bowtie, Pipe
+Alien, Red Cap, Earring Gold, Laser Eye
 ```
 
 ![](i/madcamels0.png)
@@ -264,9 +264,9 @@ Green, Alien, Red Cap, Earring Gold, Laser Eye
 Let's try - [**marcs/generate**](marcs/generate.rb):
 
 ```
-Deal With It Devil
 Marc 4, Frumpy Hair, Green Shirt, Lasers, Cigarette
 Zombie, Green Eyes, Wild Hair, Mustache, Polarized
+Alien, Green Eyes, Gold Earring, Crazy Hair, Full Mustache Dark, Horned Rim Glasses
 ```
 
 ![](i/marcs0.png)
