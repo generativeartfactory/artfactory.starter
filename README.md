@@ -79,7 +79,7 @@ edgepunks = Artfactory.read( 'edgepunks/spritesheet-24x24.png',
 
 specs = [
   # no.282
-  ['Pink', 'Dark Green Lizard', 'Dark Robe', 'Monster Mouth', 
+  ['Pink', 'Dark Green Lizard', 'Dark Robe', 'Monster Mouth',
     'Bat', 'Laser Eyes'],
   # no.468
   ['Pink', 'Purple Body', 'Dark Suit', 'Smile', 'Dark Hair', 'Dark Shades'],
@@ -221,6 +221,30 @@ Human Fuk, Chin Strap, Fast Food Cap, Nose, Grin, Nerd Glasses
 ![](i/fuks0@4x.png)
 ![](i/fuks1@4x.png)
 ![](i/fuks2@4x.png)
+
+
+### Inverse Punks (in 24×24px)
+
+Let's try - [**inversepunks/generate**](inversepunks/generate.rb):
+
+```
+Inverted V2, Alien, Pimple, Cap Forward, Eyes, Bubble Gum, White Gold Chain, Gold Earring
+Inverted V2, Alien, Clear, Knitted Cap, VR, White Gold Chain, Gold Earring
+Inverted V2, Ape, Clear, Bandana, Classic Shades, Blue Medical Mask, Pink Sapphire Necklace
+```
+
+![](i/inversepunks0.png)
+![](i/inversepunks1.png)
+![](i/inversepunks2.png)
+
+4x:
+
+![](i/inversepunks0@4x.png)
+![](i/inversepunks1@4x.png)
+![](i/inversepunks2@4x.png)
+
+
+
 
 
 
