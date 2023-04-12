@@ -290,6 +290,70 @@ Zombie, Green Eyes, Wild Hair, Mustache, Polarized
 
 
 
+#### NFL (in 23×23px)
+
+Let's try - [**nfl/generate**](nfl/generate.rb):
+
+```
+Justin Fields
+Turf, Bot, Oakland, 13, Full Beard Light
+Goal Line, Base 5, Atlanta, 7, Full Beard Black
+```
+
+![](i/nfl0.png)
+![](i/nfl1.png)
+![](i/nfl2.png)
+
+4x:
+
+![](i/nfl0@4x.png)
+![](i/nfl1@4x.png)
+![](i/nfl2@4x.png)
+
+
+
+#### Nomads (in 24×24px)
+
+Let's try - [**nomads/generate**](nomads/generate.rb):
+
+```
+Plain, Male 6, Laser, No Really No Mad, Mohawkin
+Dark Plain, Male 2, Purple, No Really No Mad, Basement Dwellin
+Over The Rainbow Bridge For Nomad Bridge, Male 4, Purple, I AM NOT F ING MAD, Mohawkin
+```
+
+![](i/nomads0.png)
+![](i/nomads1.png)
+![](i/nomads2.png)
+
+4x:
+
+![](i/nomads0@4x.png)
+![](i/nomads1@4x.png)
+![](i/nomads2@4x.png)
+
+
+
+#### Phunk Ape Origins (in 24×24px)
+
+
+Let's try - [**phunkapeorigins/generate**](phunkapeorigins/generate.rb):
+
+```
+Blue 3, Chimpanzee 1, Arrow, Snow Visor, Tooth Plug, Diamond Chain
+Blue 5, Silver Back, Wild Monkey Hair, Focused, Silver Dangle, Gold Chain, Cigar
+Blue 1,  Yeti, Royal Crown, Matrix Shades, Silver Stud, Tooth Necklace, Tooth
+```
+
+![](i/phunkapeorigins0.png)
+![](i/phunkapeorigins1.png)
+![](i/phunkapeorigins2.png)
+
+4x:
+
+![](i/phunkapeorigins0@4x.png)
+![](i/phunkapeorigins1@4x.png)
+![](i/phunkapeorigins2@4x.png)
 
 
 
