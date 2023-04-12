@@ -348,6 +348,26 @@ Yeti, Royal Crown, Matrix Shades, Silver Stud, Tooth Necklace, Tooth
 
 
 
+#### Punk Apes Yacht Club (in 24×24px)
+
+Let's try - [**punkapesyachtclub/generate**](punkapesyachtclub/generate.rb):
+
+```
+Black, Prison Jumpsuit, Top Hat, Green Eye Shadow, Cigarette With Hot Lipstick, Silver Loop
+Trippy, Biker Vest, Silver Chain, Pink With Hat, Clown Eyes Green, Frown, Silver Stud
+Zombie, Tanktop, Orange Side, 3D Glasses, Frown
+```
+
+![](i/punkapesyachtclub0.png)
+![](i/punkapesyachtclub1.png)
+![](i/punkapesyachtclub2.png)
+
+4x:
+
+![](i/punkapesyachtclub0@4x.png)
+![](i/punkapesyachtclub1@4x.png)
+![](i/punkapesyachtclub2@4x.png)
+
 
 
 
