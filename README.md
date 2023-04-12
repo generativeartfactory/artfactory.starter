@@ -75,13 +75,10 @@ edgepunks = Artfactory.read( 'edgepunks/spritesheet-24x24.png',
                              height: 24)
 
 specs = [
-  # no.282
-  ['Pink', 'Dark Green Lizard', 'Dark Robe', 'Monster Mouth',
+  ['Dark Green Lizard', 'Dark Robe', 'Monster Mouth',
     'Bat', 'Laser Eyes'],
-  # no.468
-  ['Pink', 'Purple Body', 'Dark Suit', 'Smile', 'Dark Hair', 'Dark Shades'],
-  # no.678 (1/1)
-  ['Anatomy Of An Icon'],
+  ['Purple Body', 'Dark Suit', 'Smile', 'Dark Hair', 'Dark Shades'],
+  ['Whited Body', 'Monster Mouth', 'Edge Wizard Hat', 'Lizard Eyes'],
 ]
 
 

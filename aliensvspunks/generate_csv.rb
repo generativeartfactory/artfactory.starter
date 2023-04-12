@@ -1,3 +1,8 @@
+#####
+#  to run use:
+#     $ ruby aliensvspunks/generate_csv.rb
+
+
 require 'artfactory'
 
 
